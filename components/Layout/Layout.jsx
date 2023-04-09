@@ -84,7 +84,7 @@ export default function Layout({ children }) {
     <>
       <div className="h-screen w-full flex font-hind">
         <div
-          className="sidebar h-full lg:w-1/6 md:w-1/4 w-0 flex flex-col justify-between bg-no-repeat bg-cover bg-center bg-blend-overlay bg-white bg-opacity-90"
+          className="sidebar h-full lg:w-1/5 md:w-1/4 w-0 flex flex-col justify-between bg-no-repeat bg-cover bg-center bg-blend-overlay bg-white bg-opacity-90"
           style={{ backgroundImage: "url('/img/school1.jpg')" }}
         >
           <Link
