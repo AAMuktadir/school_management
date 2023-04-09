@@ -7,7 +7,7 @@ import { Dropdown, Avatar, Tooltip, Divider } from "@nextui-org/react";
 import { useUser } from "../../context/UserContextProvider";
 import { GrFormNext } from "react-icons/gr";
 import Link from "next/link";
-import { pb } from "../../libs/pocketbase";
+import Dropdownli from "./Dropdownli";
 
 export default function Layout({ children }) {
   const logout = useUserLogout();
@@ -44,9 +44,7 @@ export default function Layout({ children }) {
               height={80}
               alt={"sayemlogo"}
             />
-            <span className="text-[18px] font-light mt-3">
-              CSE470: Overseas
-            </span>
+            <span className="text-[18px] font-bold mt-3">SCM</span>
           </Link>
           <ul className="mt-5 h-full px-4">
             <li className="border-b border-gray-300">
@@ -58,25 +56,24 @@ export default function Layout({ children }) {
                 <GrFormNext />
               </Link>
             </li>
-            <li className="">
-              <Link
-                href={"/clients"}
-                className="py-2 flex justify-between items-center"
-              >
-                <span>Clients</span>
-                <GrFormNext />
-              </Link>
-            </li>
 
-            <li className="">
-              <Link
-                href={"/agents"}
-                className="py-2 flex justify-between items-center"
-              >
-                <span>Agents</span>
+            {/* <li className="">
+              <div className="py-2 flex justify-between items-center cursor-pointer">
+                <span>Course Management</span>
                 <GrFormNext />
-              </Link>
-            </li>
+              </div>
+              <ul className="pl-5">
+                <Link
+                  href={"/course"}
+                  className="py-2 flex justify-between items-center"
+                >
+                  <span>akash</span>
+                  <GrFormNext />
+                </Link>
+              </ul>
+            </li> */}
+
+            <Dropdownli title={"Course Management"} />
 
             <li className="">
               <Link
@@ -93,33 +90,7 @@ export default function Layout({ children }) {
               <Dropdown.Trigger>
                 <div className="px-5 w-full profile cursor-pointer flex justify-between items-center">
                   <div className="flex flex-row justify-start items-center gap-2">
-                    {/* <Avatar
-                      // @ts-ignore
-                      text={
-                        user
-                          ? user.name[0]
-                            ? user.name[0].toUpperCase()
-                            : ""
-                          : ""
-                      }
-                      src={
-                        user
-                          ? // @ts-ignore
-                            pb.getFileUrl(user, user.avatar, {
-                              thumb: "100x250",
-                            })
-                          : ""
-                      }
-                      // color={"gradient"}
-                      textColor="white"
-                      size={"md"}
-                      // squared
-                    /> */}
                     <span className="text-[18px] text-center font-semibold text-green-600">
-                      {/* {user
-                        ? // @ts-ignore
-                          user.name
-                        : ""} */}
                       Account
                     </span>
                   </div>
