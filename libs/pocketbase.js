@@ -2,12 +2,12 @@ import PocketBase from "pocketbase";
 
 export const pb = new PocketBase("http://127.0.0.1:8090/");
 
-//akash
+//..............Student.....................
 
-export const getAgents = async () => {
+//fetching all Students
+export const getStudents = async () => {
   try {
-    // you can also fetch all records at once via getFullList
-    const records = await pb.collection("agents").getFullList({
+    const records = await pb.collection("student").getFullList({
       sort: "-created",
     });
 
@@ -17,54 +17,138 @@ export const getAgents = async () => {
   }
 };
 
-export const updateAgent = async (
+//student update
+export const updateStudent = async (
   id,
   name,
+  student_id,
+  grade,
+  blood_group,
+  age,
   address,
-  contact,
-  passclient,
-  failedclient,
-  clientque
+  guardian_name
 ) => {
-  // example update data
   try {
     const data = {
       name: name,
-      // "address": address,
-      // "contact": contact,
-      // "passedclient": passclient,
-      // "failedclient": failedclient,
-      // "clientqueue": clientque
+      student_id: student_id,
+      grade: grade,
+      blood_group: blood_group,
+      age: age,
+      address: address,
+      guardian_name: guardian_name,
     };
-    const record = await pb.collection("agents").update(id, data);
+
+    const record = await pb.collection("student").update(id, data);
     return record;
   } catch (e) {
     console.log(e);
   }
 };
 
-// create Client
-export const createClient = async (
-  firstname,
-  lastname,
+//New Student Addition
+export const createStudent = async (
+  name,
+  student_id,
+  grade,
+  blood_group,
   age,
-  agent,
   address,
-  nid
+  guardian_name
 ) => {
   try {
     const data = {
-      firstname: firstname,
-      lastname: lastname,
+      name: name,
+      student_id: student_id,
+      grade: grade,
+      blood_group: blood_group,
       age: age,
-      agent: agent,
       address: address,
-      nid: nid,
+      guardian_name: guardian_name,
     };
 
-    const record = await pb.collection("clients").create(data);
+    const record = await pb.collection("student").create(data);
     return record;
   } catch (e) {
     console.log(e);
+  }
+};
+
+//Delete a single Student
+export const deleteStudent = async (id) => {
+  try {
+    await pb.collection("student").delete(id);
+
+    return true;
+  } catch (e) {
+    console.log(e);
+    return false;
+  }
+};
+
+//........................Teacher...................
+
+//fetching all Teachers
+export const getTeachers = async () => {
+  try {
+    const records = await pb.collection("teacher").getFullList({
+      sort: "-created",
+    });
+
+    return records;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+//Teacher update
+export const updateTeacher = async (
+  id,
+  name,
+  departement,
+  designation,
+  age
+) => {
+  try {
+    const data = {
+      name: name,
+      departement: departement,
+      designation: designation,
+      age: age,
+    };
+
+    const record = await pb.collection("teacher").update(id, data);
+    return record;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+//New Teacher Addition
+export const createTeacher = async (name, departement, designation, age) => {
+  try {
+    const data = {
+      name: name,
+      departement: departement,
+      designation: designation,
+      age: age,
+    };
+
+    const record = await pb.collection("teacher").create(data);
+    return record;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+//Delete a single Teacher
+export const deleteTeacher = async (id) => {
+  try {
+    await pb.collection("teacher").delete(id);
+
+    return True;
+  } catch (e) {
+    console.log(e);
+    return false;
   }
 };
