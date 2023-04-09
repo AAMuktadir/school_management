@@ -4,10 +4,10 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { useEffect } from "react";
-import { useUser } from "../context/UserContextProvider";
-import Header from "../components/Layout/header";
+import { useUser } from "../../context/UserContextProvider";
+import Header from "../../components/Layout/header";
 
-export default function Agents() {
+export default function TeacherAttendance() {
   const [isLoading, setLoading] = useState(false);
   const router = useRouter();
   const user = useUser();
@@ -24,17 +24,17 @@ export default function Agents() {
   return (
     <>
       <Head>
-        <title>Agents</title>
+        <title>Teacher Attendance</title>
         <meta name="description" content="Overseas" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <Header title={"Agents"}>
+        <Header title={"Teacher Attendance"}>
           <div className=""></div>
         </Header>
         <div className="p-5">
-          <h1>Here we can see all the agents</h1>
+          <h1>Here we can see all the Teacher Attendance</h1>
         </div>
       </main>
     </>

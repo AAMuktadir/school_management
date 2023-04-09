@@ -9,6 +9,59 @@ import { GrFormNext } from "react-icons/gr";
 import Link from "next/link";
 import Dropdownli from "./Dropdownli";
 
+const navDetail = [
+  {
+    title: "Course Management",
+    dropdowns: [
+      {
+        id: 0,
+        title: "Course Info",
+        link: "/courseinfo",
+      },
+      {
+        id: 1,
+        title: "Register Student",
+        link: "/regstu",
+      },
+    ],
+  },
+  {
+    title: "Teacher Management",
+    dropdowns: [
+      {
+        id: 0,
+        title: "Teacher Info",
+        link: "/teachermanagement/teacherinfo",
+      },
+      {
+        id: 1,
+        title: "Attendance",
+        link: "/teachermanagement/teacheratt",
+      },
+    ],
+  },
+  {
+    title: "Student Management",
+    dropdowns: [
+      {
+        id: 0,
+        title: "Student Info",
+        link: "/studentinfo",
+      },
+      {
+        id: 1,
+        title: "Attendance",
+        link: "/studentatt",
+      },
+      {
+        id: 2,
+        title: "Report",
+        link: "/studentreport",
+      },
+    ],
+  },
+];
+
 export default function Layout({ children }) {
   const logout = useUserLogout();
   const router = useRouter();
@@ -57,33 +110,13 @@ export default function Layout({ children }) {
               </Link>
             </li>
 
-            {/* <li className="">
-              <div className="py-2 flex justify-between items-center cursor-pointer">
-                <span>Course Management</span>
-                <GrFormNext />
-              </div>
-              <ul className="pl-5">
-                <Link
-                  href={"/course"}
-                  className="py-2 flex justify-between items-center"
-                >
-                  <span>akash</span>
-                  <GrFormNext />
-                </Link>
-              </ul>
-            </li> */}
-
-            <Dropdownli title={"Course Management"} />
-
-            <li className="">
-              <Link
-                href={"/agents"}
-                className="py-2 flex justify-between items-center"
-              >
-                <span>Companies</span>
-                <GrFormNext />
-              </Link>
-            </li>
+            {navDetail.map((navIndi) => (
+              <Dropdownli
+                list={navIndi}
+                key={navIndi.title}
+                current={router.pathname}
+              />
+            ))}
           </ul>
           <div className=" border-t border-gray-300 h-24 flex justify-center">
             <Dropdown>
