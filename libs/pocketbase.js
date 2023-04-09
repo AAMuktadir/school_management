@@ -171,7 +171,7 @@ export const deleteTeacher = async (id) => {
   try {
     await pb.collection("teacher").delete(id);
 
-    return True;
+    return true;
   } catch (e) {
     console.log(e);
     return false;
@@ -239,7 +239,7 @@ export const deleteCourse = async (id) => {
   try {
     await pb.collection("course").delete(id);
 
-    return True;
+    return true;
   } catch (e) {
     console.log(e);
     return false;
