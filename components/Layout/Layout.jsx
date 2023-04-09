@@ -16,12 +16,12 @@ const navDetail = [
       {
         id: 0,
         title: "Course Info",
-        link: "/courseinfo",
+        link: "/coursemanagement/courseinfo",
       },
       {
         id: 1,
         title: "Register Student",
-        link: "/regstu",
+        link: "/coursemanagement/regstu",
       },
     ],
   },
@@ -46,17 +46,17 @@ const navDetail = [
       {
         id: 0,
         title: "Student Info",
-        link: "/studentinfo",
+        link: "/studentmanagement/studentinfo",
       },
       {
         id: 1,
         title: "Attendance",
-        link: "/studentatt",
+        link: "/studentmanagement/studentatt",
       },
       {
         id: 2,
         title: "Report",
-        link: "/studentreport",
+        link: "/studentmanagement/studentreport",
       },
     ],
   },
@@ -85,7 +85,7 @@ export default function Layout({ children }) {
       <div className="h-screen w-full flex font-hind">
         <div
           className="sidebar h-full lg:w-1/6 md:w-1/4 w-0 flex flex-col justify-between bg-no-repeat bg-cover bg-center bg-blend-overlay bg-white bg-opacity-90"
-          style={{ backgroundImage: "url('/img/out.png')" }}
+          style={{ backgroundImage: "url('/img/school1.jpg')" }}
         >
           <Link
             href={"/"}
