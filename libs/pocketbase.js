@@ -185,6 +185,7 @@ export const getCourses = async () => {
   try {
     const records = await pb.collection("course").getFullList({
       sort: "-created",
+      expand: "assigned_teacher",
     });
 
     return records;
@@ -214,17 +215,28 @@ export const updateCourse = async (
   }
 };
 
-//New Course Addition
-export const createCourse = async (
-  course_name,
-  assigned_teacher, // type=array=[assigned_teacher]
-  student_taken // type=array=[student_taken]
+//Course details assignTeacher
+export const assignTeacherUpdate = async (
+  id,
+  assigned_teacher // type=array=[assigned_teacher]
 ) => {
   try {
     const data = {
-      course_name: course_name,
       assigned_teacher: assigned_teacher,
-      student_taken: student_taken,
+    };
+
+    const record = await pb.collection("course").update(id, data);
+    return record;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+//New Course Addition
+export const createCourse = async (course_name) => {
+  try {
+    const data = {
+      course_name: course_name,
     };
 
     const record = await pb.collection("course").create(data);
@@ -320,29 +332,20 @@ export const getTeacherAttendance = async () => {
 //Fetching all Teachers attendance by date
 export const teacherAttendanceByDate = async (date) => {
   try {
-    const resultList = await pb
-      .collection("teacher_attendance")
-      .getList(1, 50, {
-        filter: date,
-      });
+    const resultList = await pb.collection("teacher_attendance").getFullList({
+      filter: `date ~ "${date}"`,
+      expand: "teacher",
+    });
+    return resultList;
   } catch (e) {
     console.log(e);
   }
 };
 
-//Teachers attendance update
-export const updateTeacherAttendance = async (
-  id,
-  date, //date type variable
-  teacher // type=array=[student_taken]
-) => {
+//Teachers attendance delete
+export const deleteTeacherAttendance = async (id) => {
   try {
-    const data = {
-      date: date,
-      teacher: teacher,
-    };
-
-    const record = await pb.collection("teacher_attendance").update(id, data);
+    const record = await pb.collection("teacher_attendance").delete(id);
     return record;
   } catch (e) {
     console.log(e);
@@ -352,7 +355,7 @@ export const updateTeacherAttendance = async (
 //New Teachers attendance creation for another date
 export const createTeacherAttendance = async (
   date, //date type variable
-  teacher // type=array=[student_taken]
+  teacher // teacher id
 ) => {
   try {
     const data = {
@@ -366,3 +369,77 @@ export const createTeacherAttendance = async (
     console.log(e);
   }
 };
+
+//........................Grade Sheet...................
+
+//Fetching all Grade Sheet
+export const getGradeSheet = async () => {
+  try {
+    const records = await pb.collection("grade_sheet").getFullList({
+      sort: "-created",
+    });
+
+    return records;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+//Grade Sheet details update
+export const updateGradeSheet = async (
+  id,
+  marks,
+  get_grade,
+  student, // type=array=[student]
+  course
+) => {
+  try {
+    const data = {
+      marks: marks,
+      get_grade: get_grade,
+      student: student,
+      course: course,
+    };
+
+    const record = await pb.collection("grade_sheet").update(id, data);
+    return record;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+//New Grade Sheet Addition
+export const createGradeSheet = async (
+  marks,
+  get_grade,
+  student, // type=array=[student]
+  course
+) => {
+  try {
+    const data = {
+      marks: marks,
+      get_grade: get_grade,
+      student: student,
+      course: course,
+    };
+
+    const record = await pb.collection("grade_sheet").create(data);
+    return record;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+//Delete a single Grade Sheet
+export const deleteGradeSheet = async (id) => {
+  try {
+    await pb.collection("grade_sheet").delete(id);
+
+    return true;
+  } catch (e) {
+    console.log(e);
+    return false;
+  }
+};
+
+//Query Completed

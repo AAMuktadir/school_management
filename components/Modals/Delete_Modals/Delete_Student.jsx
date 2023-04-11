@@ -1,15 +1,15 @@
 import React from "react";
 import { Modal } from "@nextui-org/react";
-import { deleteTeacher } from "../../../libs/pocketbase";
+import { deleteStudent } from "../../../libs/pocketbase";
 
-export default function Delete_Teacher({
+export default function Delete_Student({
   visible,
   setVisible,
-  teacher,
+  student,
   reset,
 }) {
   const confirmHandler = async () => {
-    const result = await deleteTeacher(teacher.id);
+    const result = await deleteStudent(student.id);
     if (result) {
       reset();
       setVisible(false);
@@ -20,16 +20,16 @@ export default function Delete_Teacher({
     <>
       <Modal
         closeButton
-        aria-labelledby={"Delete Teacher"}
+        aria-labelledby={"Delete Student"}
         open={visible}
         onClose={() => setVisible(false)}
       >
         <Modal.Header>
-          <span className="text-xl font-semibold">{"Delete Teacher"}</span>
+          <span className="text-xl font-semibold">{"Delete Student"}</span>
         </Modal.Header>
         <Modal.Body>
           <div className="text-center">
-            <span>Do yout want to delete {teacher ? teacher.name : ""}?</span>
+            <span>Do yout want to delete {student ? student.name : ""}?</span>
           </div>
         </Modal.Body>
         <Modal.Footer>

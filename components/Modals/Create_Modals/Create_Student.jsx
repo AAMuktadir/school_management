@@ -1,17 +1,18 @@
 import React from "react";
 import { Modal } from "@nextui-org/react";
-import { createTeacher } from "../../../libs/pocketbase";
+import { createStudent } from "../../../libs/pocketbase";
 
-// name, departement, designation, age
-
-export default function Create_Teacher({ visible, setVisible, reset }) {
-  const createTeacherHandler = async (form) => {
+export default function Create_Student({ visible, setVisible, reset }) {
+  const createStudentHandler = async (form) => {
     form.preventDefault();
-    const result = await createTeacher(
+    const result = await createStudent(
       form.target.name.value,
-      form.target.dep.value,
-      form.target.deg.value,
-      form.target.age.value
+      form.target.s_id.value,
+      form.target.class.value,
+      form.target.b_group.value,
+      form.target.age.value,
+      form.target.address.value,
+      form.target.guardian.value
     );
     if (result) {
       reset();
@@ -22,7 +23,7 @@ export default function Create_Teacher({ visible, setVisible, reset }) {
     <>
       <Modal
         closeButton
-        aria-labelledby={"Create Teacher"}
+        aria-labelledby={"Create Student"}
         open={visible}
         onClose={() => setVisible(false)}
       >
@@ -32,7 +33,7 @@ export default function Create_Teacher({ visible, setVisible, reset }) {
         <Modal.Body>
           <form
             className="flex flex-col gap-2"
-            onSubmit={(e) => createTeacherHandler(e)}
+            onSubmit={(e) => createStudentHandler(e)}
           >
             <input
               type="text"
@@ -41,21 +42,40 @@ export default function Create_Teacher({ visible, setVisible, reset }) {
               className="px-2 py-1 border rounded"
             />
             <input
-              type="text"
-              name="deg"
-              placeholder="Designation"
-              className="px-2 py-1 border rounded"
-            />
-            <input
-              type="text"
-              name="dep"
-              placeholder="Department"
+              type={"number"}
+              name="s_id"
+              placeholder="Student ID"
               className="px-2 py-1 border rounded"
             />
             <input
               type={"number"}
+              name="class"
+              placeholder="Grade"
+              className="px-2 py-1 border rounded"
+            />
+            <input
+              type="text"
+              name="b_group"
+              placeholder="Blood Group"
+              className="px-2 py-1 border rounded"
+            />
+
+            <input
+              type={"number"}
               name="age"
               placeholder="age"
+              className="px-2 py-1 border rounded"
+            />
+            <input
+              type="text"
+              name="address"
+              placeholder="Address"
+              className="px-2 py-1 border rounded"
+            />
+            <input
+              type="text"
+              name="guardian"
+              placeholder="Guardian Name"
               className="px-2 py-1 border rounded"
             />
             <input
