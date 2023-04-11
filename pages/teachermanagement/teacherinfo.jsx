@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { Loading } from "@nextui-org/react";
 import Head from "next/head";
 import { useRouter } from "next/router";
@@ -6,7 +7,7 @@ import { useEffect } from "react";
 import { useUser } from "../../context/UserContextProvider";
 import Header from "../../components/Layout/header";
 import { Table } from "@nextui-org/react";
-import { pb } from "../../libs/pocketbase";
+import { getTeachers } from "../../libs/pocketbase";
 
 //modals
 import Create_Teacher from "../../components/Modals/Create_Modals/Create_Teacher";
@@ -16,6 +17,7 @@ import Delete_Teacher from "../../components/Modals/Delete_Modals/Delete_Teacher
 export default function TeacherInfo() {
   const [isLoading, setLoading] = useState(false);
   //modal states
+  const [Teachers, setTeachers] = useState(null);
   const [AddTeacherVisible, setAddTeacherVisible] = useState(false);
   const [EditTeacherVisible, setEditTeacherVisible] = useState(false);
   const [DeleteTeacherVisible, setDeleteTeacherVisible] = useState(false);
@@ -25,18 +27,26 @@ export default function TeacherInfo() {
 
   //modal functions
   //TODO - parameter teacher
-  const EditTeacherModalHandler = () => {
-    // setSelecetedTeacher(teacher);
+  const EditTeacherModalHandler = (teacher) => {
+    setSelecetedTeacher(teacher);
     setEditTeacherVisible(true);
   };
 
   //TODO - parameter teacher
-  const DeleteTeacherModalHandler = () => {
-    // setSelecetedTeacher(teacher);
+  const DeleteTeacherModalHandler = (teacher) => {
+    setSelecetedTeacher(teacher);
     setDeleteTeacherVisible(true);
   };
 
-  useEffect(() => {}, []);
+  const getTeachersHandler = async () => {
+    const result = await getTeachers();
+    // @ts-ignore
+    setTeachers(result);
+  };
+
+  useEffect(() => {
+    getTeachersHandler();
+  }, []);
 
   if (user === false) {
     router.push("/login");
@@ -81,7 +91,32 @@ export default function TeacherInfo() {
               <Table.Column>OPTION</Table.Column>
             </Table.Header>
             <Table.Body>
-              <Table.Row key="1">
+              {Teachers &&
+                Teachers.map((teacher) => (
+                  <Table.Row key={teacher.id}>
+                    <Table.Cell>{teacher.name}</Table.Cell>
+                    <Table.Cell>{teacher.designation}</Table.Cell>
+                    <Table.Cell>{teacher.departement}</Table.Cell>
+                    <Table.Cell>{teacher.age}</Table.Cell>
+                    <Table.Cell>
+                      <div className="flex gap-3">
+                        <button
+                          className="bg-blue-600 text-white px-2 py-1 rounded"
+                          onClick={() => EditTeacherModalHandler(teacher)}
+                        >
+                          EDIT
+                        </button>
+                        <button
+                          className="bg-red-600 text-white rounded px-2 py-1"
+                          onClick={() => DeleteTeacherModalHandler(teacher)}
+                        >
+                          DELETE
+                        </button>
+                      </div>
+                    </Table.Cell>
+                  </Table.Row>
+                ))}
+              {/* <Table.Row key="1">
                 <Table.Cell>Tony Reichert</Table.Cell>
                 <Table.Cell>Senior Faculty</Table.Cell>
                 <Table.Cell>CSE</Table.Cell>
@@ -102,7 +137,7 @@ export default function TeacherInfo() {
                     </button>
                   </div>
                 </Table.Cell>
-              </Table.Row>
+              </Table.Row> */}
             </Table.Body>
           </Table>
         </div>
@@ -111,14 +146,19 @@ export default function TeacherInfo() {
           <Create_Teacher
             visible={AddTeacherVisible}
             setVisible={setAddTeacherVisible}
+            reset={getTeachersHandler}
           />
           <Edit_Teacher
             visible={EditTeacherVisible}
             setVisible={setEditTeacherVisible}
+            teacher={SelectedTeacher}
+            reset={getTeachersHandler}
           />
           <Delete_Teacher
             visible={DeleteTeacherVisible}
             setVisible={setDeleteTeacherVisible}
+            teacher={SelectedTeacher}
+            reset={getTeachersHandler}
           />
         </div>
       </main>

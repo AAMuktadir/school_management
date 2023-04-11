@@ -320,29 +320,20 @@ export const getTeacherAttendance = async () => {
 //Fetching all Teachers attendance by date
 export const teacherAttendanceByDate = async (date) => {
   try {
-    const resultList = await pb
-      .collection("teacher_attendance")
-      .getList(1, 50, {
-        filter: date,
-      });
+    const resultList = await pb.collection("teacher_attendance").getFullList({
+      filter: `date ~ "${date}"`,
+      expand: "teacher",
+    });
+    return resultList;
   } catch (e) {
     console.log(e);
   }
 };
 
-//Teachers attendance update
-export const updateTeacherAttendance = async (
-  id,
-  date, //date type variable
-  teacher // type=array=[student_taken]
-) => {
+//Teachers attendance delete
+export const deleteTeacherAttendance = async (id) => {
   try {
-    const data = {
-      date: date,
-      teacher: teacher,
-    };
-
-    const record = await pb.collection("teacher_attendance").update(id, data);
+    const record = await pb.collection("teacher_attendance").delete(id);
     return record;
   } catch (e) {
     console.log(e);
@@ -352,7 +343,7 @@ export const updateTeacherAttendance = async (
 //New Teachers attendance creation for another date
 export const createTeacherAttendance = async (
   date, //date type variable
-  teacher // type=array=[student_taken]
+  teacher // teacher id
 ) => {
   try {
     const data = {

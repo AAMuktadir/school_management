@@ -1,7 +1,23 @@
 import React from "react";
 import { Modal } from "@nextui-org/react";
+import { createTeacher } from "../../../libs/pocketbase";
 
-export default function Create_Teacher({ visible, setVisible }) {
+// name, departement, designation, age
+
+export default function Create_Teacher({ visible, setVisible, reset }) {
+  const createTeacherHandler = async (form) => {
+    form.preventDefault();
+    const result = await createTeacher(
+      form.target.name.value,
+      form.target.dep.value,
+      form.target.deg.value,
+      form.target.age.value
+    );
+    if (result) {
+      reset();
+      setVisible(false);
+    }
+  };
   return (
     <>
       <Modal
@@ -14,28 +30,31 @@ export default function Create_Teacher({ visible, setVisible }) {
           <span className="text-xl font-semibold">{"Create Teacher"}</span>
         </Modal.Header>
         <Modal.Body>
-          <form className="flex flex-col gap-2">
+          <form
+            className="flex flex-col gap-2"
+            onSubmit={(e) => createTeacherHandler(e)}
+          >
             <input
               type="text"
-              name=""
+              name="name"
               placeholder="Name"
               className="px-2 py-1 border rounded"
             />
             <input
               type="text"
-              name=""
+              name="deg"
               placeholder="Designation"
               className="px-2 py-1 border rounded"
             />
             <input
               type="text"
-              name=""
+              name="dep"
               placeholder="Department"
               className="px-2 py-1 border rounded"
             />
             <input
               type={"number"}
-              name=""
+              name="age"
               placeholder="age"
               className="px-2 py-1 border rounded"
             />
