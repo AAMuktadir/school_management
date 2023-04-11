@@ -368,3 +368,75 @@ export const createTeacherAttendance = async (
 };
 
 //........................Grade Sheet...................
+
+//Fetching all Grade Sheet
+export const getGradeSheet = async () => {
+  try {
+    const records = await pb.collection("grade_sheet").getFullList({
+      sort: "-created",
+    });
+
+    return records;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+//Grade Sheet details update
+export const updateGradeSheet = async (
+  id,
+  marks,
+  get_grade,
+  student, // type=array=[student]
+  course
+) => {
+  try {
+    const data = {
+      marks: marks,
+      get_grade: get_grade,
+      student: student,
+      course: course,
+    };
+
+    const record = await pb.collection("grade_sheet").update(id, data);
+    return record;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+//New Grade Sheet Addition
+export const createGradeSheet = async (
+  marks,
+  get_grade,
+  student, // type=array=[student]
+  course
+) => {
+  try {
+    const data = {
+      marks: marks,
+      get_grade: get_grade,
+      student: student,
+      course: course,
+    };
+
+    const record = await pb.collection("grade_sheet").create(data);
+    return record;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+//Delete a single Grade Sheet
+export const deleteGradeSheet = async (id) => {
+  try {
+    await pb.collection("grade_sheet").delete(id);
+
+    return true;
+  } catch (e) {
+    console.log(e);
+    return false;
+  }
+};
+
+//Query Completed
