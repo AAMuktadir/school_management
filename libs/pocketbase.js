@@ -185,6 +185,7 @@ export const getCourses = async () => {
   try {
     const records = await pb.collection("course").getFullList({
       sort: "-created",
+      expand: "assigned_teacher",
     });
 
     return records;
@@ -214,17 +215,28 @@ export const updateCourse = async (
   }
 };
 
-//New Course Addition
-export const createCourse = async (
-  course_name,
-  assigned_teacher, // type=array=[assigned_teacher]
-  student_taken // type=array=[student_taken]
+//Course details assignTeacher
+export const assignTeacherUpdate = async (
+  id,
+  assigned_teacher // type=array=[assigned_teacher]
 ) => {
   try {
     const data = {
-      course_name: course_name,
       assigned_teacher: assigned_teacher,
-      student_taken: student_taken,
+    };
+
+    const record = await pb.collection("course").update(id, data);
+    return record;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+//New Course Addition
+export const createCourse = async (course_name) => {
+  try {
+    const data = {
+      course_name: course_name,
     };
 
     const record = await pb.collection("course").create(data);
