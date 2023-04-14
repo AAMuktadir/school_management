@@ -50,6 +50,7 @@ export default function TeacherAttendance() {
     // console.log("att teachers", attendedTeachers);
 
     if (attendedTeachers) {
+      console.log(attendedTeachers);
       const final = teachers?.filter((teacher) => {
         return !attendedTeachers?.some(
           // @ts-ignore
